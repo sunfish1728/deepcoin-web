@@ -22,6 +22,9 @@
   "devDependencies": {
     "esbuild": "0.25.10",
     "fake-indexeddb": "^6.2.4",
-    "vite": "^6.1.0"
+    "vite": "6.4.4"
+  },
+  "overrides": {
+    "tinyglobby": "0.2.17"
   }
 }
