@@ -1,7 +1,8 @@
 # 鯨幣網頁版
 
-全專案記憶見 `../CLAUDE.md`，卡片格式見 `../SPEC.md`，角色包格式見 `../讀卡工具/AVATAR.md`。
-使用者指示：移植手機 App 到此獨立資料夾，但不移植寫卡；網址尚未決定，先做成可設定。
+全專案記憶與權威規格在主專案：https://github.com/sunfish1728/deepcoin 。卡片格式見該倉庫 SPEC.md，角色包格式見 讀卡工具/AVATAR.md。
+本站使用 GitHub Actions pages.yml 部署至 https://sunfish1728.github.io/deepcoin-web/ 。
+使用者指示：網頁獨立維護，還原手機 App 介面，不移植寫卡。預設網址已確定；Android 仍允許自訂跳轉網址。
 2026-10-11 補充指示：網頁介面要還原手機 App；不要再自行增加宣傳頁或桌面分欄。
 
 ## 結構
@@ -53,3 +54,14 @@
 - 網頁版資料和 Android App 各自獨立。
 
 0.6.1 發布完成：程式碼 eda7244 已推上 deepcoin/main，[GitHub Release v0.6.1](https://github.com/sunfish1728/deepcoin/releases/tag/v0.6.1) 已公開；APK 上傳大小／雜湊核對成功。網頁只更新原始碼，尚未部署。
+
+## 2026-10-11：外部託管與 Pages（0.7.0／0.4.0／0.2.0）
+
+- 使用者定案：網頁獨立公開倉庫 deepcoin-web；設定另存 deepcoin-web-API；共用 token 注入 APK，使用者明確接受可被擷取及倉庫可能被修改。token 只有設定倉庫 Contents 讀寫、Metadata 讀取，原始碼不含 token。
+- 卡片規格先更新 SPEC.md，再同步兩個 Android codec／WebCardLink 與網頁；託管卡 v2 只存 id、key、ref，完整設定保持 v1。GitHub 上傳內容排除 key，使用新檔名，上傳並公開回讀核對後才能寫卡。
+- 寫卡網址空白預設 https://sunfish1728.github.io/deepcoin-web/ ，自訂 HTTPS 網址仍可用；新卡只存一筆 URI，兼容舊 MIME／AAR 卡。
+- 刷託管卡先下載、檢查版本／ID／大小，再本機合併卡上 key；連線失敗可使用同網址已驗證快取，首次失敗停止套用。
+- 網頁保留 App 的介面，不含寫卡；獨立倉庫以 main 的 Pages workflow 建置部署。本專案網頁版/ 保留本次同步副本，後續網頁開發以獨立倉庫為準。
+- 驗證：鯨幣 78 項、獨立寫卡 17 項、網頁 20 項測試通過，兩份 APK 與網頁建置成功。專用 token 實際 PUT 201、公開 GET 200，公開檔不含 API key；Pages 部署成功、瀏覽器與 Android API34 模擬器都已載入公開 v2 設定並合併假密鑰。未用真實 API key 或真卡測試 NFC。
+- GitHub 專案 Pages 無法提供帳號網域根目錄的 assetlinks；Android 是否自動進 App 視系統連結設定而定，網頁保留「用 App 開啟」。64 字元 key 的託管範例 NDEF 約343 bytes（不含標籤 TLV），實際以寫卡頁容量為準。
+- 本機重建：在專案根目錄的 hosting.properties 設 token=專用授權；此檔已被 git 忽略。沒有此檔仍可讀託管卡，只有上傳功能不可用；不要把 token 放進網頁或版本庫。
