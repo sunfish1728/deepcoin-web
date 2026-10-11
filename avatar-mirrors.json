@@ -1,0 +1,8 @@
+{
+  "sources": [
+    {
+      "index": "https://raw.githubusercontent.com/sunfish1728/deepcoin-avatars/main/deepcoin-avatars.json",
+      "permission": "https://github.com/sunfish1728/deepcoin-avatars/blob/main/PERMISSION.md"
+    }
+  ]
+}
