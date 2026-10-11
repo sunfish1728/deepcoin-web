@@ -88,3 +88,9 @@ Android 16 起 HTTPS NFC 使用 ACTION_VIEW；較舊手機的 NFC 選擇器／�
 這是開發測試用伺服器，不包含在部署的 `dist/` 中。
 
 介面依手機 App 還原：主頁形象舞台＋底部卡片／聊天、獨立聊天頁、單欄設定。網頁不含寫卡，底部只保留主頁／設定；桌面同樣顯示這個 App 介面，不改成左右分欄。
+
+## 新增可供網頁自動下载的形象
+
+0.2.2 不再固定三個角色。已加入的形象庫更新 deepcoin-avatars.json 後，重新執行 Pages 部署即可納入新角色，不必改網頁程式。每項需提供 file、size、sha256、authors、license。網站輸出 avatar-mirrors.json 下載映射與 avatar-packages/CREDITS.txt，角色包原樣保存、模型不提交 git。
+
+要加入另一個已允許再發布的形象庫，在根目錄 avatar-mirrors.json 的 sources 增加 index（HTTPS 索引網址）及 permission（確認許可來源），再部署。加入前須確認該庫每個角色均可再發布；索引文字本身不是自動授權。未納入的網址沿用原來源，仍需要 CORS。
