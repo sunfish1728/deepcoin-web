@@ -1,0 +1,2 @@
+# Bundled renderer contains upstream GLSL source strings with intentional whitespace.
+public/avatar/stage.js -whitespace
