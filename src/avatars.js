@@ -76,8 +76,17 @@ export async function install(bytes, name, source='import', charId='', expected=
   const avatar={id, ...meta, name:manifest.name || meta.name || name, charId:manifest.char_id || charId, source, manifest, installedAt:Date.now(), size:model.length, blob:new Blob([model],{type:'model/gltf-binary'})};
   await avatarStore('put',avatar); return avatar;
 }
+export function avatarDownloadUrl(value) {
+  const url=httpUrl(value), parts=url.pathname.split('/').filter(Boolean);
+  // Releases 不支援瀏覽器 CORS；這三份已授權角色包由 Pages 部署流程核對 SHA 後鏡像。
+  const files=['deepseek-whale-v1.0.0.zip','white-purple-dragon-v1.0.0.zip','claude-whale-v1.0.0.zip'];
+  if(url.hostname==='github.com' && parts[0]==='sunfish1728' && parts[1]==='deepcoin-avatars' && parts[2]==='releases' && parts[3]==='download' && parts.length===6 && files.includes(parts[5])) {
+    return 'https://sunfish1728.github.io/deepcoin-web/avatar-packages/'+parts[5];
+  }
+  return url.href;
+}
 export async function download(url, source, charId, expected, progress) {
-  httpUrl(url); const r=await fetch(url,{referrerPolicy:'no-referrer'});
+  const r=await fetch(avatarDownloadUrl(url),{referrerPolicy:'no-referrer'});
   if(!r.ok) throw new Error('形象下載失敗：HTTP ' + r.status);
   if(/text\/html|image\//.test(r.headers.get('content-type')||'')) throw new Error('網址回傳網頁或圖片，請使用模型下載連結');
   return install(await bounded(r,LIMIT,progress), url.split('/').at(-1),source,charId,expected);
