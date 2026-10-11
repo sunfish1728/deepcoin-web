@@ -3,3 +3,5 @@ node_modules/
 dist/
 *.vrm
 *.glb
+
+.npm-cache-verify/
